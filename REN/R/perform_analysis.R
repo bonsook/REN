@@ -1,3 +1,44 @@
+#' Perform Portfolio Analysis
+#'
+#' This function performs portfolio analysis using various methods such as Mean-Variance (MV),
+#' James-Stein (JM), LASSO, Ridge Regression, Equal Weighting (EW), among others.
+#' It calculates weights, turnover, returns, Sharpe ratios, volatility, and maximum drawdown for each method.
+#'
+#' @param x A numeric matrix where each column represents asset returns and rows represent time periods.
+#' @param mon A numeric vector representing the number of months since the start date for each time period.
+#' @param count A numeric vector indicating the number of entries per month.
+#' @param Date A vector of Date objects representing the dates of the time periods.
+#' @param num_cores The number of cores to use for parallel processing. Default is 7.
+#'
+#' @return A list containing the following components:
+#' \describe{
+#'   \item{cumulative_return_plot}{A ggplot object representing the cumulative returns for each method.}
+#'   \item{cumulative_turnover_plot}{A ggplot object representing the cumulative turnover for each method.}
+#'   \item{turnover_mean}{A numeric vector of the mean turnover for each method.}
+#'   \item{sharpe_ratio}{A numeric vector of the Sharpe ratio for each method.}
+#'   \item{volatility}{A numeric vector of the annualized volatility for each method.}
+#'   \item{max_drawdown}{A numeric vector of the maximum drawdown for each method.}
+#'   \item{vw_to_mean}{The mean turnover for the volume-weighted (VW) portfolio.}
+#'   \item{vw_sharpe_ratio}{The Sharpe ratio for the VW portfolio.}
+#'   \item{vw_volatility}{The annualized volatility for the VW portfolio.}
+#'   \item{vw_max_drawdown}{The maximum drawdown for the VW portfolio.}
+#' }
+#'
+#' @details The function iterates through different time periods and calculates portfolio weights,
+#' turnover, and returns for multiple methods including Mean-Variance (MV), James-Stein (JM), and various
+#' regularization techniques. It also computes performance metrics like the Sharpe ratio, volatility,
+#' maximum drawdown, and cumulative turnover for each method. Visualization of the cumulative returns
+#' and turnover is generated using ggplot2.
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage
+#' result <- perform_analysis(x, mon, count, Date, num_cores = 7)
+#' print(result$cumulative_return_plot)
+#' print(result$cumulative_turnover_plot)
+#' }
+#'
+#' @export
 perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
   p <- ncol(x)
 
