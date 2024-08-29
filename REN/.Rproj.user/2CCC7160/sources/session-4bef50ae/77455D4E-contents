@@ -3,7 +3,7 @@
 title: "REN: Regularization Ensemble for Portfolio Optimization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{REN: Regularization Ensemble for Portfolio Optimization}
+  %\VignetteIndexEntry{REN}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -44,6 +44,14 @@ The REN package leverages parallel processing to speed up computation, especiall
 cl <- setup_parallel()
 ```
 
+
+
+Once you're done with the parallel computation, remember to stop the cluster to free up resources:
+
+```{r}
+# Stop the parallel cluster
+stopCluster(cl)
+```
 
 ## Preparing the Data
 
@@ -95,14 +103,6 @@ max_drawdown <- result$max_drawdown
 # Display the cumulative return plot
 print(cumulative_return_plot)
 
-```
-
-
-## Once you're done with the parallel computation, remember to stop the cluster to free up resources:
-
-```{r}
-# Stop the parallel cluster
-stopCluster(cl)
 ```
 
 ### Interpreting Results
