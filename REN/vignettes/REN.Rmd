@@ -8,6 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -81,7 +82,7 @@ The core function of the REN package is `perform_analysis`, which performs portf
 
 Let's perform portfolio analysis on the prepared data:
 
-```{r}
+```{r, echo=FALSE}
 # Perform the portfolio analysis
 result <- perform_analysis(x, mon, count, Date, num_cores)
 
@@ -97,13 +98,13 @@ print(cumulative_return_plot)
 
 ```
 
-
-## Once you're done with the parallel computation, remember to stop the cluster to free up resources:
+Once you're done with the parallel computation, remember to stop the cluster to free up resources:
 
 ```{r}
 # Stop the parallel cluster
 stopCluster(cl)
 ```
+
 
 ### Interpreting Results
 
