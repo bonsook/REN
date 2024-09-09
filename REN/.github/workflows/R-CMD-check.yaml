@@ -41,12 +41,18 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      # Add this step to navigate into the REN subdirectory
+      - name: Change to REN subdirectory
+        run: cd REN
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
+        working-directory: REN  # Ensure dependencies are checked in the subdirectory
 
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+        working-directory: REN  # Ensure checks run in the subdirectory
