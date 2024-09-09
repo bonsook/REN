@@ -5,6 +5,10 @@ output:
   github_document
 ---
 
+ <!-- badges: start -->
+  [![R-CMD-check](https://github.com/bonsook/REN/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bonsook/REN/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
 ## Overview
 
 The REN package provides a set of tools for performing portfolio optimization using various regularization and ensemble learning methods. The package is designed to produce stable out-of-sample return predictions, particularly in the presence of strong correlations between assets. The core functions enable users to prepare data, set up parallel processing, and perform in-depth portfolio analysis.
