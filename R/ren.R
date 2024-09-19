@@ -32,10 +32,7 @@
 #' @examples
 #' \dontrun{
 #' # Example usage
-#' result <- ren(dat,
-#' date_column_index = 1,
-#' start_date = '19990101',
-#' end_date = '20231231', num_cores = 7)
+#' result <- ren(dat)
 #' print(result$cumulative_return_plot)
 #' print(result$cumulative_turnover_plot)
 #' }

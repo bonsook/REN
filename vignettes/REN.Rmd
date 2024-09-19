@@ -30,8 +30,8 @@ This vignette will walk you through the main functionalities of the REN package,
 
 You can install the development version of the REN package from GitHub:
 
-```{r, eval = FALSE}
-#devtools::install_github("bonsook/REN")
+```
+devtools::install_github("bonsook/REN")
 ```
 
 ## Setting Up Parallel Processing
