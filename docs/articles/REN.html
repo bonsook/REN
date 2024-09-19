@@ -44,6 +44,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -90,8 +93,7 @@ and perform portfolio optimization.</p>
 </h2>
 <p>You can install the development version of the REN package from
 GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#devtools::install_github("bonsook/REN")</span></span></code></pre></div>
+<pre><code><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bonsook/REN"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="setting-up-parallel-processing">Setting Up Parallel Processing<a class="anchor" aria-label="anchor" href="#setting-up-parallel-processing"></a>
@@ -111,76 +113,11 @@ processing.</p>
 <span><span class="co">#&gt; Loading required package: foreach</span></span>
 <span><span class="co">#&gt; Loading required package: iterators</span></span>
 <span><span class="co">#&gt; Loading required package: parallel</span></span>
-<span><span class="co">#&gt; Loading required package: snow</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'snow'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:parallel':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     closeNode, clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,</span></span>
-<span><span class="co">#&gt;     clusterExport, clusterMap, clusterSplit, makeCluster, parApply,</span></span>
-<span><span class="co">#&gt;     parCapply, parLapply, parRapply, parSapply, recvData, recvOneData,</span></span>
-<span><span class="co">#&gt;     sendData, splitIndices, stopCluster</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'lubridate'</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
-<span><span class="co">#&gt; Loading required package: fda</span></span>
-<span><span class="co">#&gt; Loading required package: splines</span></span>
-<span><span class="co">#&gt; Loading required package: fds</span></span>
-<span><span class="co">#&gt; Loading required package: rainbow</span></span>
-<span><span class="co">#&gt; Loading required package: MASS</span></span>
-<span><span class="co">#&gt; Loading required package: pcaPP</span></span>
-<span><span class="co">#&gt; Loading required package: RCurl</span></span>
-<span><span class="co">#&gt; Loading required package: deSolve</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'fda'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:graphics':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     matplot</span></span>
-<span><span class="co">#&gt; Loading required package: fields</span></span>
-<span><span class="co">#&gt; Loading required package: spam</span></span>
-<span><span class="co">#&gt; Spam version 2.10-0 (2023-10-23) is loaded.</span></span>
-<span><span class="co">#&gt; Type 'help( Spam)' or 'demo( spam)' for a short introduction </span></span>
-<span><span class="co">#&gt; and overview of this package.</span></span>
-<span><span class="co">#&gt; Help for individual functions is also obtained by adding the</span></span>
-<span><span class="co">#&gt; suffix '.spam' to the function name, e.g. 'help( chol.spam)'.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'spam'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:mvtnorm':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     rmvnorm, rmvt</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:Matrix':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     det</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     backsolve, forwardsolve</span></span>
-<span><span class="co">#&gt; Loading required package: viridisLite</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Try help(fields) to get started.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'tictoc'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:RCurl':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     pop, push</span></span>
-<span><span class="co">#&gt; Loading required package: xts</span></span>
-<span><span class="co">#&gt; Loading required package: zoo</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'zoo'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     as.Date, as.Date.numeric</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'xts'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:fields':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     addLegend</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'PerformanceAnalytics'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:graphics':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     legend</span></span>
 <span><span class="co">#&gt; Enter the number of cores to use (default is 7):</span></span></code></pre></div>
 </div>
 </div>
@@ -522,8 +459,8 @@ volatility, and maximum drawdown.</p>
 <span><span class="co">#&gt; [1] 292</span></span>
 <span><span class="co">#&gt; [1] 293</span></span>
 <span><span class="co">#&gt; [1] 294</span></span>
-<span><span class="co">#&gt; total: 2200.541 sec elapsed</span></span></code></pre>
-<p><img src="REN_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<span><span class="co">#&gt; total: 2362.191 sec elapsed</span></span></code></pre>
+<p><img src="REN_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Once you’re done with the parallel computation, remember to stop the
 cluster to free up resources:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
