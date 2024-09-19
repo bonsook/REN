@@ -38,8 +38,8 @@ setup_parallel <- function(num_cores = 7) {
   }
 
   # Set up parallel processing
-  cl <- makeCluster(num_cores)  # Create a cluster
-  registerDoParallel(cl)
+  cl <- parallel::makeCluster(num_cores)  # Create a cluster
+  doParallel::registerDoParallel(cl)
 
   return(cl)
 }

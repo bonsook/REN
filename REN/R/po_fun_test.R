@@ -1,3 +1,5 @@
+utils::globalVariables(c("i", "m", "Method", "value", "time", "var", "sd"))
+
 #' Insert Values at Specified Positions in a Vector
 #'
 #' This function inserts specified values at given positions in a vector.
@@ -41,11 +43,11 @@ po.avg <- function (y0, x0, method = "LASSO"){
     y_tmp <- x0[,i] - y0
     x_tmp <- x0[,i] - x0[,-i]
     switch(method,
-           LASSO = {cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+           LASSO = {cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
            w_tmp <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
            insert.at(w_tmp,i-1,1-sum(as.numeric(w_tmp)))},
 
-           RIDGE = {cv <- cv.glmnet(x_tmp,y_tmp,alpha = 0,paralle = TRUE)
+           RIDGE = {cv <- cv.glmnet(x_tmp,y_tmp,alpha = 0,parallel = TRUE)
            w_tmp <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
            insert.at(w_tmp,i-1,1-sum(as.numeric(w_tmp)))},
 
@@ -89,13 +91,13 @@ po.grossExp <- function (y0, x0, method = "NOSHORT"){
            k <- which(round(sol,5)==1)
            y_tmp <- x0[,k] - y0
            x_tmp <- x0[,k] - x0[,-k]
-           cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+           cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
            w <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
            w <- insert.at(w,k-1,1-sum(as.numeric(w)))
          } else {
            y_tmp <- x0%*%sol - y0
            x_tmp <- as.numeric(x0%*%sol) - x0
-           cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+           cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
            w <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
            w <- (1-sum(cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]))*sol + cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
          }},
@@ -123,7 +125,7 @@ po.covShrink <- function (y0, x0){
   j <- which(apply(x0, 2, var) <= 0, arr.ind = TRUE)
   x0 <- x0[,which(apply(x0, 2, var) > 0, arr.ind = TRUE)]
   p <- dim(x0)[2]
-  Dmat <- matrix(nearPD(cov_shrink(cov(x0)))["mat"][[1]]@x,p,p) #cov(x0)
+  Dmat <- matrix(nearPD(cov.shrink(cov(x0)))["mat"][[1]]@x,p,p) #cov(x0)
   dvec <- as.matrix(rep(0, p))
   A.eq <- as.matrix(rep(1, p))
   b.eq <- 1
@@ -262,7 +264,7 @@ buh.clust <- function (x){
 #         # construct gross exposure portfilio
 #         y_tmp <- x0[,index]%*%sol - y0
 #         x_tmp <- as.numeric(x0[,index]%*%sol) - x0
-#         cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+#         cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
 #         w <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
 #         w[index] <- w[index] + (1-sum(cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]))*sol
 #         w
@@ -306,13 +308,13 @@ po.bhu <- function (y0, x0, group, rep){
       k <- ind[k]
       y_tmp <- x0[,k] - y0
       x_tmp <- x0[,k] - x0[,-k]
-      cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+      cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
       w.tmp <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
       insert.at(w.tmp,k-1,1-sum(as.numeric(w.tmp)))
     } else {
       y_tmp <- x0[,ind]%*%sol - y0
       x_tmp <- as.numeric(x0[,ind]%*%sol) - x0
-      cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+      cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
       w.tmp <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
       w.tmp[ind] <- w.tmp[ind] + (1-as.numeric(sum(cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)])))*sol
       w.tmp
@@ -418,13 +420,13 @@ po.SW.lasso <- function (y0, x0, b, sample){
       k <- ind[k]
       y_tmp <- x0[,k] - y0
       x_tmp <- x0[,k] - x0[,-k]
-      cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+      cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
       w.tmp <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
       insert.at(w.tmp,k-1,1-sum(as.numeric(w.tmp)))
     } else {
       y_tmp <- x0[,ind]%*%sol - y0
       x_tmp <- as.numeric(x0[,ind]%*%sol) - x0
-      cv <- cv.glmnet(x_tmp,y_tmp,paralle = TRUE)
+      cv <- cv.glmnet(x_tmp,y_tmp,parallel = TRUE)
       w.tmp <- cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)]
       w.tmp[ind] <- w.tmp[ind] + (1-as.numeric(sum(cv$glmnet.fit$beta[,which(cv$lambda == cv$lambda.min)])))*sol
       w.tmp

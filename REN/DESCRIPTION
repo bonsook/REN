@@ -11,27 +11,25 @@ Description: The REN package provides tools for portfolio optimization using a c
     and maximum drawdown are also provided to assess the results.
 License: AGPL (>= 3)
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.3.2
 Imports:
     lubridate,
     glmnet,
     quadprog,
     doParallel,
-    mvtnorm,
-    doSNOW,
-    CCA,
     Matrix,
     tictoc,
     corpcor,
-    PerformanceAnalytics,
     ggplot2,
     reshape2,
     foreach,
-    iterators
+    stats,
+    parallel
 Suggests: 
     knitr,
     rmarkdown,
+    KernSmooth,
+    cluster,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
