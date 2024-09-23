@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```
 library(REN)
 ```
 
@@ -40,7 +40,7 @@ The REN package leverages parallel processing to speed up computation, especiall
 
 ### Example
 
-```{r}
+```
 # Set up parallel processing with the default number of cores or choose a specific number
 cl <- setup_parallel()
 ```
@@ -54,7 +54,7 @@ The `prepare_data` function is designed to help you structure your input data ap
 
 Suppose you have a data frame `your_data` with asset returns:
 
-```{r}
+```
 # Load the dataset (replace with your actual data path)
 ff25 <- read.csv("data/FF25.csv")
 
@@ -82,7 +82,7 @@ The core function of the REN package is `perform_analysis`, which performs portf
 
 Let's perform portfolio analysis on the prepared data:
 
-```{r, echo=FALSE}
+```
 # Perform the portfolio analysis
 result <- perform_analysis(x, mon, count, Date, num_cores)
 
@@ -100,7 +100,7 @@ print(cumulative_return_plot)
 
 Once you're done with the parallel computation, remember to stop the cluster to free up resources:
 
-```{r}
+```
 # Stop the parallel cluster
 stopCluster(cl)
 ```
