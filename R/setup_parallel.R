@@ -20,7 +20,7 @@
 #' cl <- setup_parallel(num_cores = 4)
 #'
 #' # Remember to stop the cluster when finished
-#' stopCluster(cl)
+#' parallel::stopCluster(cl)
 #' }
 #'
 #' @export
