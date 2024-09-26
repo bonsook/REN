@@ -47,7 +47,18 @@ cl <- setup_parallel()
 
 The `prepare_data` function is designed to help you structure your input data appropriately for portfolio optimization. This function handles various preprocessing steps, making it easier to analyze the data using the REN package.
 
-### Example
+### Example with FF25 Dataset
+
+In this example, we use the FF25 dataset, which consists of 25 portfolios formed on size and book-to-market ratios. This dataset is commonly used in financial research to analyze asset pricing models and portfolio performance. It provides monthly returns of 25 portfolios that are intersections of five portfolios formed on size and five portfolios formed on book-to-market equity.
+
+### What is the FF25 Dataset?
+
+The FF25 dataset, derived from the Fama-French 25 portfolios, is a widely-used financial dataset that contains monthly returns of portfolios formed by sorting stocks into quintiles based on market capitalization (size) and book-to-market ratios. This data is instrumental in understanding market efficiency, asset pricing, and performance analysis across different market segments.
+
+
+
+
+### Example Data Preparation
 
 Suppose you have a data frame `your_data` with asset returns:
 
@@ -91,15 +102,74 @@ volatility <- result$volatility
 max_drawdown <- result$max_drawdown
 ```
 
+
+
+# Outputs 
+
+
+### 1. *Turnover Mean* 
+
+
 ![](images/turnover_mean.png){width="686" height="68"}
+
+
+   - This measures the average portfolio turnover, which relates to trading frequency and transaction costs.
+   
+   - REN’s turnover is moderate, suggesting it strikes a balance between performance and transaction costs.
+   
+   - MV has a very high turnover of 311.34, indicating frequent rebalancing, which might lead to higher transaction costs.
+   
+   - The EW method has the lowest turnover, almost negligible, which might reflect a more static portfolio.
+
+
+
+### 2.*Sharpe Ratio*
+
 
 ![](images/sharp_ratio.png){width="697"}
 
+
+ 
+   - The Sharpe Ratio measures risk-adjusted returns, with higher values indicating better risk-adjusted performance.
+   
+   - Most methods have Sharpe ratios between 0.5 and 1.03.
+   
+   - REN has a Sharpe ratio of approximately 1.03, indicating good risk-adjusted returns relative to others.
+   
+   - JM and TZ also have competitive Sharpe ratios above 1.0, while EW shows a significantly lower Sharpe ratio of around 0.52, indicating poor risk-adjusted performance.
+
+
+
+### 3. *Volatility*
+
+
 ![](images/volatility.png){width="696" height="28"}
+ 
+   - This measures the standard deviation of returns, indicating the level of risk.
+   
+   - Volatility values range from 13.1 to 21.8, with REN showing a volatility around 13.6, placing it in the lower-risk group.
+   
+   - TZ exhibits the highest volatility, around 21.85, suggesting it carries the most risk.
+   
+   - Methods like MV and JM are slightly more volatile compared to REN but still remain relatively stable.
+
+
+
+### 4. *Maximum Drawdown* 
+
 
 ![](images/max_drawdown.png){width="688" height="29"}
 
-# Display the cumulative return plot
+   - Maximum drawdown measures the largest peak-to-trough decline of the portfolio.
+   
+   - Most methods have a high maximum drawdown percentage, with values ranging from around 91% to 96%.
+   
+   - REN (likely 96.02223) seems to have a moderate drawdown compared to others, suggesting a reasonable risk profile.
+   
+   - Methods like JM show relatively better performance in terms of drawdown, with a value around 91%.
+
+
+### 1. *Cumulative Returns Plot* 
 
 ```         
 print(cumulative_return_plot)
@@ -107,7 +177,19 @@ print(cumulative_return_plot)
 
 ![](images/cumulative_returns.png){width="484"}
 
-# Display the cumulative turnover plot
+
+   - This plot compares the cumulative returns over time for various portfolio optimization methods (MV, FZY, REN, VW, JM, EW, TZ, NA).
+   
+   - The REN method (in black) performs well and closely follows the top-performing method.
+   - MV (in red) has high cumulative returns but exhibits higher volatility compared to others.
+   
+   - The green line (VW) has the lowest cumulative return, indicating this method underperforms relative to others.
+   
+   - REN's performance is steady and competitive with FZY, showing it is a reliable strategy for portfolio returns.
+
+
+
+### 2. *Cumulative Turnover Plot*
 
 ```         
 print(turnover_plot)
@@ -115,7 +197,19 @@ print(turnover_plot)
 
 ![](images/turnover.png){width="503"}
 
-Once you're done with the parallel computation, remember to stop the cluster to free up resources:
+   - This plot shows the cumulative turnover over time, tracking how often portfolios are rebalanced.
+   
+   - MV's line (in red) shows consistently high cumulative turnover, confirming frequent rebalancing.
+   
+   - REN has moderate cumulative turnover, performing similarly to FZY and NA.
+   
+   - VW again shows minimal turnover, reinforcing its more static nature.
+   
+   - A lower turnover might suggest lower trading costs, but it can also limit responsiveness to market changes.
+
+
+
+#### Once you're done with the parallel computation, remember to stop the cluster to free up resources:
 
 # Stop the parallel cluster
 
@@ -123,13 +217,7 @@ Once you're done with the parallel computation, remember to stop the cluster to 
 stopCluster(cl)
 ```
 
-### Interpreting Results
 
--   **Cumulative Return Plot**: Visualizes the cumulative returns of different portfolio optimization methods over time.
--   **Turnover Mean**: Provides the mean turnover for each method, which is crucial for understanding transaction costs.
--   **Sharpe Ratio**: Indicates the risk-adjusted return of the portfolios.
--   **Volatility**: Measures the annualized volatility, helping to assess the risk associated with each portfolio.
--   **Max Drawdown**: Shows the maximum observed loss from a peak to a trough, which is essential for understanding the downside risk.
 
 ## Conclusion
 

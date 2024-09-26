@@ -117,7 +117,27 @@ structure your input data appropriately for portfolio optimization. This
 function handles various preprocessing steps, making it easier to
 analyze the data using the REN package.</p>
 <div class="section level3">
-<h3 id="example-1">Example<a class="anchor" aria-label="anchor" href="#example-1"></a>
+<h3 id="example-with-ff25-dataset">Example with FF25 Dataset<a class="anchor" aria-label="anchor" href="#example-with-ff25-dataset"></a>
+</h3>
+<p>In this example, we use the FF25 dataset, which consists of 25
+portfolios formed on size and book-to-market ratios. This dataset is
+commonly used in financial research to analyze asset pricing models and
+portfolio performance. It provides monthly returns of 25 portfolios that
+are intersections of five portfolios formed on size and five portfolios
+formed on book-to-market equity.</p>
+</div>
+<div class="section level3">
+<h3 id="what-is-the-ff25-dataset">What is the FF25 Dataset?<a class="anchor" aria-label="anchor" href="#what-is-the-ff25-dataset"></a>
+</h3>
+<p>The FF25 dataset, derived from the Fama-French 25 portfolios, is a
+widely-used financial dataset that contains monthly returns of
+portfolios formed by sorting stocks into quintiles based on market
+capitalization (size) and book-to-market ratios. This data is
+instrumental in understanding market efficiency, asset pricing, and
+performance analysis across different market segments.</p>
+</div>
+<div class="section level3">
+<h3 id="example-data-preparation">Example Data Preparation<a class="anchor" aria-label="anchor" href="#example-data-preparation"></a>
 </h3>
 <p>Suppose you have a data frame <code>your_data</code> with asset
 returns:</p>
@@ -149,7 +169,7 @@ LASSO, Ridge Regression, and Equal Weighting (EW). The function
 calculates various performance metrics such as turnover, Sharpe ratio,
 volatility, and maximum drawdown.</p>
 <div class="section level3">
-<h3 id="example-2">Example<a class="anchor" aria-label="anchor" href="#example-2"></a>
+<h3 id="example-1">Example<a class="anchor" aria-label="anchor" href="#example-1"></a>
 </h3>
 <p>Let’s perform portfolio analysis on the prepared data:</p>
 <pre><code><span><span class="co"># Perform the portfolio analysis</span></span>
@@ -162,52 +182,118 @@ volatility, and maximum drawdown.</p>
 <span><span class="va">sharpe_ratio</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">sharpe_ratio</span></span>
 <span><span class="va">volatility</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">volatility</span></span>
 <span><span class="va">max_drawdown</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">max_drawdown</span></span></code></pre>
-<p><img src="images/turnover_mean.png" width="686" height="68"></p>
-<p><img src="images/sharp_ratio.png" width="697"></p>
-<p><img src="images/volatility.png" width="696" height="28"></p>
-<p><img src="images/max_drawdown.png" width="688" height="29"></p>
 </div>
 </div>
 <div class="section level1">
-<h1 id="display-the-cumulative-return-plot">Display the cumulative return plot<a class="anchor" aria-label="anchor" href="#display-the-cumulative-return-plot"></a>
+<h1 id="outputs">Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
 </h1>
+<div class="section level3">
+<h3 id="turnover-mean">1. <em>Turnover Mean</em><a class="anchor" aria-label="anchor" href="#turnover-mean"></a>
+</h3>
+<p><img src="images/turnover_mean.png" width="686" height="68"></p>
+<ul>
+<li><p>This measures the average portfolio turnover, which relates to
+trading frequency and transaction costs.</p></li>
+<li><p>REN’s turnover is moderate, suggesting it strikes a balance
+between performance and transaction costs.</p></li>
+<li><p>MV has a very high turnover of 311.34, indicating frequent
+rebalancing, which might lead to higher transaction costs.</p></li>
+<li><p>The EW method has the lowest turnover, almost negligible, which
+might reflect a more static portfolio.</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="sharpe-ratio">2.<em>Sharpe Ratio</em><a class="anchor" aria-label="anchor" href="#sharpe-ratio"></a>
+</h3>
+<p><img src="images/sharp_ratio.png" width="697"></p>
+<ul>
+<li><p>The Sharpe Ratio measures risk-adjusted returns, with higher
+values indicating better risk-adjusted performance.</p></li>
+<li><p>Most methods have Sharpe ratios between 0.5 and 1.03.</p></li>
+<li><p>REN has a Sharpe ratio of approximately 1.03, indicating good
+risk-adjusted returns relative to others.</p></li>
+<li><p>JM and TZ also have competitive Sharpe ratios above 1.0, while EW
+shows a significantly lower Sharpe ratio of around 0.52, indicating poor
+risk-adjusted performance.</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="volatility">3. <em>Volatility</em><a class="anchor" aria-label="anchor" href="#volatility"></a>
+</h3>
+<p><img src="images/volatility.png" width="696" height="28"></p>
+<ul>
+<li><p>This measures the standard deviation of returns, indicating the
+level of risk.</p></li>
+<li><p>Volatility values range from 13.1 to 21.8, with REN showing a
+volatility around 13.6, placing it in the lower-risk group.</p></li>
+<li><p>TZ exhibits the highest volatility, around 21.85, suggesting it
+carries the most risk.</p></li>
+<li><p>Methods like MV and JM are slightly more volatile compared to REN
+but still remain relatively stable.</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="maximum-drawdown">4. <em>Maximum Drawdown</em><a class="anchor" aria-label="anchor" href="#maximum-drawdown"></a>
+</h3>
+<p><img src="images/max_drawdown.png" width="688" height="29"></p>
+<ul>
+<li><p>Maximum drawdown measures the largest peak-to-trough decline of
+the portfolio.</p></li>
+<li><p>Most methods have a high maximum drawdown percentage, with values
+ranging from around 91% to 96%.</p></li>
+<li><p>REN (likely 96.02223) seems to have a moderate drawdown compared
+to others, suggesting a reasonable risk profile.</p></li>
+<li><p>Methods like JM show relatively better performance in terms of
+drawdown, with a value around 91%.</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="cumulative-returns-plot">1. <em>Cumulative Returns Plot</em><a class="anchor" aria-label="anchor" href="#cumulative-returns-plot"></a>
+</h3>
 <pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cumulative_return_plot</span><span class="op">)</span></span></code></pre>
 <p><img src="images/cumulative_returns.png" width="484"></p>
+<ul>
+<li><p>This plot compares the cumulative returns over time for various
+portfolio optimization methods (MV, FZY, REN, VW, JM, EW, TZ,
+NA).</p></li>
+<li><p>The REN method (in black) performs well and closely follows the
+top-performing method.</p></li>
+<li><p>MV (in red) has high cumulative returns but exhibits higher
+volatility compared to others.</p></li>
+<li><p>The green line (VW) has the lowest cumulative return, indicating
+this method underperforms relative to others.</p></li>
+<li><p>REN’s performance is steady and competitive with FZY, showing it
+is a reliable strategy for portfolio returns.</p></li>
+</ul>
 </div>
-<div class="section level1">
-<h1 id="display-the-cumulative-turnover-plot">Display the cumulative turnover plot<a class="anchor" aria-label="anchor" href="#display-the-cumulative-turnover-plot"></a>
-</h1>
+<div class="section level3">
+<h3 id="cumulative-turnover-plot">2. <em>Cumulative Turnover Plot</em><a class="anchor" aria-label="anchor" href="#cumulative-turnover-plot"></a>
+</h3>
 <pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">turnover_plot</span><span class="op">)</span></span></code></pre>
 <p><img src="images/turnover.png" width="503"></p>
-<p>Once you’re done with the parallel computation, remember to stop the
-cluster to free up resources:</p>
+<ul>
+<li><p>This plot shows the cumulative turnover over time, tracking how
+often portfolios are rebalanced.</p></li>
+<li><p>MV’s line (in red) shows consistently high cumulative turnover,
+confirming frequent rebalancing.</p></li>
+<li><p>REN has moderate cumulative turnover, performing similarly to FZY
+and NA.</p></li>
+<li><p>VW again shows minimal turnover, reinforcing its more static
+nature.</p></li>
+<li><p>A lower turnover might suggest lower trading costs, but it can
+also limit responsiveness to market changes.</p></li>
+</ul>
+<div class="section level4">
+<h4 id="once-youre-done-with-the-parallel-computation-remember-to-stop-the-cluster-to-free-up-resources">Once you’re done with the parallel computation, remember to stop the
+cluster to free up resources:<a class="anchor" aria-label="anchor" href="#once-youre-done-with-the-parallel-computation-remember-to-stop-the-cluster-to-free-up-resources"></a>
+</h4>
+</div>
+</div>
 </div>
 <div class="section level1">
 <h1 id="stop-the-parallel-cluster">Stop the parallel cluster<a class="anchor" aria-label="anchor" href="#stop-the-parallel-cluster"></a>
 </h1>
 <pre><code><span><span class="fu">stopCluster</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre>
-<div class="section level3">
-<h3 id="interpreting-results">Interpreting Results<a class="anchor" aria-label="anchor" href="#interpreting-results"></a>
-</h3>
-<ul>
-<li>
-<strong>Cumulative Return Plot</strong>: Visualizes the cumulative
-returns of different portfolio optimization methods over time.</li>
-<li>
-<strong>Turnover Mean</strong>: Provides the mean turnover for each
-method, which is crucial for understanding transaction costs.</li>
-<li>
-<strong>Sharpe Ratio</strong>: Indicates the risk-adjusted return of
-the portfolios.</li>
-<li>
-<strong>Volatility</strong>: Measures the annualized volatility,
-helping to assess the risk associated with each portfolio.</li>
-<li>
-<strong>Max Drawdown</strong>: Shows the maximum observed loss from
-a peak to a trough, which is essential for understanding the downside
-risk.</li>
-</ul>
-</div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
@@ -234,7 +320,8 @@ explore the examples provided in this vignette.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Bonsoo Koo.</p>
+<p>Developed by Hardik Dixit, Shijia Wang, Bonsoo Koo, Cash Looi, Hong
+Wang.</p>
 </div>
 
 <div class="pkgdown">

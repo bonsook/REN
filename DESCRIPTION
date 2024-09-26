@@ -2,7 +2,12 @@ Package: REN
 Type: Package
 Title: Regularization Ensemble for Robust Portfolio Optimization
 Version: 0.1.0
-Author: Hardik Dixit, Shijia Wang, Bonsoo Koo, Cash Looi, Hong Wang
+Authors@R: c(
+    person(given = "Hardik", family = "Dixit", role = "aut"),
+    person(given = "Shijia", family = "Wang", role = "aut"),
+    person(given = "Bonsoo", family = "Koo", role = c("aut", "cre"), email = "bonsoo.koo@monash.edu"),
+    person(given = "Cash", family = "Looi", role = "aut"),
+    person(given = "Hong", family = "Wang", role = "aut"))
 Maintainer: Bonsoo Koo <bonsoo.koo@monash.edu> 
 Description: The REN package provides tools for portfolio optimization using a combination of regularization techniques and ensemble methods. 
     It is designed to generate stable out-of-sample return predictions, particularly in the presence of strong correlations among assets. 

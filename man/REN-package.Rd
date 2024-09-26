@@ -8,4 +8,16 @@
 \description{
 The REN package provides tools for portfolio optimization using a combination of regularization techniques and ensemble methods. It is designed to generate stable out-of-sample return predictions, particularly in the presence of strong correlations among assets. The package includes functions for data preparation, parallel processing, and portfolio analysis using methods such as Mean-Variance, James-Stein, LASSO, Ridge Regression, and Equal Weighting. Visualization and performance metrics such as Sharpe ratio, volatility, and maximum drawdown are also provided to assess the results.
 }
+\author{
+\strong{Maintainer}: Bonsoo Koo \email{bonsoo.koo@monash.edu}
+
+Authors:
+\itemize{
+  \item Hardik Dixit
+  \item Shijia Wang
+  \item Cash Looi
+  \item Hong Wang
+}
+
+}
 \keyword{internal}
