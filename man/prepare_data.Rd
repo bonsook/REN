@@ -36,11 +36,11 @@ This function prepares the input data by filtering based on a specified date ran
 and handling missing values. It also generates time-related columns and returns the processed data.
 }
 \examples{
-\dontrun{
-data <- data.frame(Date = c("19990101", "19990102", "19990103"),
-                   Var1 = c(1, 2, -99.99),
-                   Var2 = c(3, 4, 5))
-result <- prepare_data(data, date_column_index = 1)
-print(result)}
+data <- data.frame(Date = c("19990101", "19990115", "19990201", "19990301", "19990315", "19990401"),
+Var1 = c(1, 2, -99.99, 4, 5, -99.99),
+Var2 = c(3, -99.99, 6, 7, 8, 9),
+Var3 = c(10, 11, 12, 13, -99.99, 15))
+result <- prepare_data(data, date_column_index = 1, start_date = '19990101', end_date = '19990430')
+print(result)
 
 }

@@ -1,13 +1,14 @@
-REN: Regularization Ensemble for Portfolio Optimization
+‘REN’: Regularization Ensemble for Portfolio Optimization
 ================
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/bonsook/REN/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bonsook/REN/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
 
-The REN package provides a set of tools for performing portfolio
+The ‘REN’ package provides a set of tools for performing portfolio
 optimization using various regularization and ensemble learning methods.
 The package is designed to produce stable out-of-sample return
 predictions, particularly in the presence of strong correlations between
@@ -16,7 +17,7 @@ processing, and perform in-depth portfolio analysis.
 
 ## Installation
 
-To install the REN package, you can use the following command:
+To install the ‘REN’ package, you can use the following command:
 
 ``` r
 # Install the development version from GitHub
@@ -115,7 +116,7 @@ print(cumulative_return_plot)
 
 ## Example Workflow
 
-Here’s an example workflow using the REN package:
+Here’s an example workflow using the ‘REN’ package:
 
 ``` r
 # Step 1: Set up parallel processing
@@ -142,8 +143,8 @@ stopCluster(cl)
 
 ## Contributing
 
-Contributions to the REN package are welcome. Please feel free to submit
-a pull request or report any issues you encounter.
+Contributions to the ‘REN’ package are welcome. Please feel free to
+submit a pull request or report any issues you encounter.
 
 ## License
 

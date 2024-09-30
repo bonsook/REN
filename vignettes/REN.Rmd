@@ -1,8 +1,8 @@
 ---
-title: "REN: Regularization Ensemble for Portfolio Optimization"
+title: "'REN': Regularization Ensemble for Portfolio Optimization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{REN: Regularization Ensemble for Portfolio Optimization}
+  %\VignetteIndexEntry{'REN': Regularization Ensemble for Portfolio Optimization}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,13 +20,13 @@ library(REN)
 
 ## Introduction
 
-The REN package provides tools for robust portfolio optimization using regularization techniques and ensemble learning methods. It is designed to generate stable out-of-sample return predictions, particularly in the presence of strong correlations among assets. The package includes functions for data preparation, parallel processing, and portfolio analysis using various methods like Mean-Variance, James-Stein, LASSO, Ridge Regression, and Equal Weighting.
+The 'REN' package provides tools for robust portfolio optimization using regularization techniques and ensemble learning methods. It is designed to generate stable out-of-sample return predictions, particularly in the presence of strong correlations among assets. The package includes functions for data preparation, parallel processing, and portfolio analysis using various methods like Mean-Variance, James-Stein, LASSO, Ridge Regression, and Equal Weighting.
 
-This vignette will walk you through the main functionalities of the REN package, demonstrating how to set up the environment, prepare data, and perform portfolio optimization.
+This vignette will walk you through the main functionalities of the 'REN' package, demonstrating how to set up the environment, prepare data, and perform portfolio optimization.
 
 ## Installation
 
-You can install the development version of the REN package from GitHub:
+You can install the development version of the 'REN' package from GitHub:
 
 ```         
 devtools::install_github("bonsook/REN")
@@ -34,7 +34,7 @@ devtools::install_github("bonsook/REN")
 
 ## Setting Up Parallel Processing
 
-The REN package leverages parallel processing to speed up computation, especially when dealing with large datasets or complex models. Use the `setup_parallel` function to set up parallel processing.
+The 'REN' package leverages parallel processing to speed up computation, especially when dealing with large datasets or complex models. Use the `setup_parallel` function to set up parallel processing.
 
 ### Example
 
@@ -45,7 +45,7 @@ cl <- setup_parallel()
 
 ## Preparing the Data
 
-The `prepare_data` function is designed to help you structure your input data appropriately for portfolio optimization. This function handles various preprocessing steps, making it easier to analyze the data using the REN package.
+The `prepare_data` function is designed to help you structure your input data appropriately for portfolio optimization. This function handles various preprocessing steps, making it easier to analyze the data using the 'REN' package.
 
 ### Example with FF25 Dataset
 
@@ -83,7 +83,7 @@ The `prepare_data` function processes your data, making it ready for portfolio o
 
 ## Performing Portfolio Analysis
 
-The core function of the REN package is `perform_analysis`, which performs portfolio optimization using multiple methods, including Mean-Variance (MV), James-Stein (JM), LASSO, Ridge Regression, and Equal Weighting (EW). The function calculates various performance metrics such as turnover, Sharpe ratio, volatility, and maximum drawdown.
+The core function of the 'REN' package is `perform_analysis`, which performs portfolio optimization using multiple methods, including Mean-Variance (MV), James-Stein (JM), LASSO, Ridge Regression, and Equal Weighting (EW). The function calculates various performance metrics such as turnover, Sharpe ratio, volatility, and maximum drawdown.
 
 ### Example
 
@@ -181,6 +181,7 @@ print(cumulative_return_plot)
    - This plot compares the cumulative returns over time for various portfolio optimization methods (MV, FZY, REN, VW, JM, EW, TZ, NA).
    
    - The REN method (in black) performs well and closely follows the top-performing method.
+   
    - MV (in red) has high cumulative returns but exhibits higher volatility compared to others.
    
    - The green line (VW) has the lowest cumulative return, indicating this method underperforms relative to others.
@@ -221,6 +222,6 @@ stopCluster(cl)
 
 ## Conclusion
 
-The REN package provides a comprehensive set of tools for robust portfolio optimization using regularization and ensemble learning methods. By following the steps outlined in this vignette, you can effectively set up your environment, prepare your data, and perform in-depth portfolio analysis.
+The 'REN' package provides a comprehensive set of tools for robust portfolio optimization using regularization and ensemble learning methods. By following the steps outlined in this vignette, you can effectively set up your environment, prepare your data, and perform in-depth portfolio analysis.
 
 For further information, please refer to the package documentation or explore the examples provided in this vignette.

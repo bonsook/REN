@@ -46,10 +46,18 @@ and turnover is generated using ggplot2.
 }
 \examples{
 \dontrun{
-# Example usage
-result <- perform_analysis(x, mon, count, Date, num_cores = 7)
+# Create a larger example dataset that aligns with the function's expectations
+set.seed(123)
+x <- matrix(runif(700), ncol = 10)  # 10 columns (assets), 70 rows (observations)
+mon <- rep(1:10, each = 7)          # Example month identifiers, 7 observations per month
+count <- rep(7, 10)                 # Example count per month (7 entries per month)
+Date <- as.Date('2020-01-01') + 0:69 # Example date sequence (70 days)
+
+# Run the analysis with 2 cores
+result <- perform_analysis(x, mon, count, Date, num_cores = 2)
+
+# Display results
 print(result$cumulative_return_plot)
 print(result$cumulative_turnover_plot)
 }
-
 }

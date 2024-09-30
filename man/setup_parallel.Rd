@@ -22,15 +22,8 @@ argument \code{num_cores} or via interactive user input. The function also loads
 portfolio analysis.
 }
 \examples{
-\dontrun{
-# Set up parallel processing with the default number of cores
-cl <- setup_parallel()
-
-# Set up parallel processing with 4 cores
-cl <- setup_parallel(num_cores = 4)
-
-# Remember to stop the cluster when finished
-parallel::stopCluster(cl)
-}
-
+# Set up parallel processing with a specified number of cores
+cl <- setup_parallel(num_cores = 2)  # Use 2 cores for the example
+print(cl)  # Print the cluster information
+parallel::stopCluster(cl)  # Stop the cluster after use to clean up
 }
