@@ -2,57 +2,45 @@
 % Please edit documentation in R/ren.R
 \name{ren}
 \alias{ren}
-\title{Regularization Ensemble Portfolio Analysis (REN)}
+\title{Main Function for Portfolio Analysis}
 \usage{
 ren(
   dat,
   date_column_index = 1,
   start_date = "19990101",
   end_date = "20231231",
-  num_cores = 7
+  num_cores = 2
 )
 }
 \arguments{
-\item{dat}{A data frame or matrix where the first column is the date and the remaining columns are the data (typically asset returns).}
+\item{dat}{A data frame or matrix where the first column is the date and the remaining columns are the data.}
 
 \item{date_column_index}{The index of the date column in the input data. Default is 1.}
 
-\item{start_date}{A character string specifying the start date for filtering the data in 'YYYYMMDD' format. Default is '19990101'.}
+\item{start_date}{A character string specifying the start date for filtering the data in 'YYYYMMDD' format.
+Default is '19990101'.}
 
-\item{end_date}{A character string specifying the end date for filtering the data in 'YYYYMMDD' format. Default is '20231231'.}
+\item{end_date}{A character string specifying the end date for filtering the data in 'YYYYMMDD' format.
+Default is '20231231'.}
 
-\item{num_cores}{The number of cores to use for parallel processing. Default is 7.}
+\item{num_cores}{The number of cores to use for parallel processing. Default is 2.}
 }
 \value{
-A list containing the results of the portfolio analysis including:
-\describe{
-  \item{cumulative_return_plot}{A ggplot object representing the cumulative returns for each method.}
-  \item{cumulative_turnover_plot}{A ggplot object representing the cumulative turnover for each method.}
-  \item{turnover_mean}{A numeric vector of the mean turnover for each method.}
-  \item{sharpe_ratio}{A numeric vector of the Sharpe ratio for each method.}
-  \item{volatility}{A numeric vector of the annualized volatility for each method.}
-  \item{max_drawdown}{A numeric vector of the maximum drawdown for each method.}
-  \item{vw_to_mean}{The mean turnover for the volume-weighted (VW) portfolio.}
-  \item{vw_sharpe_ratio}{The Sharpe ratio for the VW portfolio.}
-  \item{vw_volatility}{The annualized volatility for the VW portfolio.}
-  \item{vw_max_drawdown}{The maximum drawdown for the VW portfolio.}
-}
+The results from `perform_analysis`, including plots and performance metrics.
 }
 \description{
-This function serves as the main entry point for performing portfolio analysis using the Regularization Ensemble
-(REN) methodology. It sets up parallel processing, prepares the input data, and performs the analysis to generate
-performance metrics and visualizations.
-}
-\details{
-The function first sets up parallel processing based on the specified number of cores. It then prepares
-the input data by filtering it based on a date range and handling missing data. The core analysis is performed using
-various portfolio optimization methods, and the results include performance metrics such as Sharpe ratio, volatility,
-and maximum drawdown, as well as visualizations of cumulative returns and turnover.
+This function integrates data preparation, parallel setup, and portfolio analysis.
+It takes raw data as input, prepares it using `prepare_data`, sets up parallel processing
+using `setup_parallel`, and performs the analysis using `perform_analysis`.
 }
 \examples{
 \dontrun{
-# Example usage
-result <- ren(dat)
+load the sample data
+dat(FF25)
+# Run the main function
+result <- ren(data)
+
+# Display results
 print(result$cumulative_return_plot)
 print(result$cumulative_turnover_plot)
 }

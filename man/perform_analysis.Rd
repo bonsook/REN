@@ -45,7 +45,7 @@ maximum drawdown, and cumulative turnover for each method. Visualization of the 
 and turnover is generated using ggplot2.
 }
 \examples{
-\dontrun{
+\donttest{
 # Create a larger example dataset that aligns with the function's expectations
 set.seed(123)
 x <- matrix(runif(700), ncol = 10)  # 10 columns (assets), 70 rows (observations)

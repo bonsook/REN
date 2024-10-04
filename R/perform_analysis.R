@@ -31,7 +31,7 @@
 #' and turnover is generated using ggplot2.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Create a larger example dataset that aligns with the function's expectations
 #' set.seed(123)
 #' x <- matrix(runif(700), ncol = 10)  # 10 columns (assets), 70 rows (observations)
@@ -58,8 +58,6 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
   w0.tmp <- matrix(data = 1/p, nrow = p, ncol = 13)
   r <- matrix(NA, sum(count[7:length(count)]), 13)
 
-  tic("total")
-
   # Main analysis loop
   for (i in (7:max(mon))) {
     w.tmp <- matrix(data = NA, nrow = p, ncol = 13)
@@ -67,19 +65,19 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
     n_tmp <- nrow(x_tmp)
     group <- buh.clust(x_tmp)
 
-    # Perform calculations for different methods
+    # Perform calculations for different methods (ensure these functions are defined)
     w.tmp[,1] <- po.cols(rep(0, n_tmp), x_tmp)                                                 # MV
     w.tmp[,2] <- po.JM(x_tmp)                                                                 # JM
     w.tmp[,3] <- po.avg(rep(0, n_tmp), x_tmp, method = "LASSO")                               # TRP_min
     w.tmp[,4] <- po.avg(rep(0, n_tmp), x_tmp, method = "RIDGE")                               # APP-Ridge
     w.tmp[,5] <- po.grossExp(rep(0, n_tmp), x_tmp, method = "NOSHORT")                        # Fan.et.al_JM
-    w.tmp[,6] <- po.grossExp(rep(0, n_tmp), x_tmp, method = "EQUAL")                           # FZY
-    w.tmp[,7] <- rep(1/p, p)                                                                   # EW
-    w.tmp[,9] <- po.bhu(rep(0, n_tmp), x_tmp, group, 100)                                      # TRP_clu
-    w.tmp[,10] <- po.TZT(x_tmp, gamma = 3)                                                     # TZ
-    w.tmp[,11] <- po.SW(x_tmp, b = round(p^0.7), sample = 1000)                                # SW
-    w.tmp[,12] <- po.SW(x_tmp, b = round(length(group)), sample = 1000)                        # SW_clu
-    w.tmp[,13] <- po.SW.lasso(rep(0, n_tmp), x_tmp, b = round(length(group)), sample = 1000)   # SW_shrink
+    w.tmp[,6] <- po.grossExp(rep(0, n_tmp), x_tmp, method = "EQUAL")                          # FZY
+    w.tmp[,7] <- rep(1/p, p)                                                                  # EW
+    w.tmp[,9] <- po.bhu(rep(0, n_tmp), x_tmp, group, 100)                                     # TRP_clu
+    w.tmp[,10] <- po.TZT(x_tmp, gamma = 3)                                                    # TZ
+    w.tmp[,11] <- po.SW(x_tmp, b = round(p^0.7), sample = 1000)                               # SW
+    w.tmp[,12] <- po.SW(x_tmp, b = round(length(group)), sample = 1000)                       # SW_clu
+    w.tmp[,13] <- po.SW.lasso(rep(0, n_tmp), x_tmp, b = round(length(group)), sample = 1000)  # SW_shrink
 
     # Store weights and turnover
     for (j in 1:13) {
@@ -87,13 +85,13 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
       turn_over[i - 6,j] <- norm(as.matrix(w.tmp[,j]) - w0.tmp[,j])
     }
 
-    w0.tmp <- w.tmp
+    # Define r_tmp before using it
+    r_tmp <- (1 + (x[which(mon == i), ] / 100))
 
     # Calculate returns
-    r_tmp <- (1 + (x[which(mon == i), ] / 100))
     for (j in 1:13) {
       for (k in 1:nrow(r_tmp)) {
-        idx <- which(mon == i)[k] - 124
+        idx <- which(mon == i)[k] - sum(count[1:6])
         if (idx > 0 && idx <= nrow(r)) {
           r[idx,j] <- r_tmp[k,] %*% w0.tmp[,j]
           w0.tmp[,j] <- (r_tmp[k,] * w0.tmp[,j]) / sum(r_tmp[k,] * w0.tmp[,j])
@@ -102,25 +100,24 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
       w0.tmp[,j] <- w0.tmp[,j] / sum(w0.tmp[,j])
     }
 
+    w0.tmp <- w.tmp
     message(sprintf("Processed month %d", i - 6))
   }
 
-  toc()
-
   # Performance Metrics
   colnames(turn_over) <- c("MV","JM","TRP_min","APP-Ridge","Fan.et.al_JM","FZY","EW","LW","TRP_clu","TZ","SW","SW_clu","SW_shrink")
-  turnover_mean <- colMeans(turn_over) * 100 # TO
+  turnover_mean <- colMeans(turn_over, na.rm = TRUE) * 100
 
-  sharpe_ratio <- sqrt(252) * (apply(r - 1, 2, mean) / apply(r - 1, 2, sd)) # SR
-  volatility <- sqrt(252) * apply(r - 1, 2, sd) * 100 # VO
+  sharpe_ratio <- sqrt(252) * (colMeans(r - 1, na.rm = TRUE) / apply(r - 1, 2, sd, na.rm = TRUE))
+  volatility <- sqrt(252) * apply(r - 1, 2, sd, na.rm = TRUE) * 100
 
   v <- apply((1 + (r - 1)), 2, cumprod)
-  v1 <- as.matrix(apply(v, 2, max))
-  v1 <- matrix(rep(t(v1), dim(v)[1]), ncol = dim(v)[2], byrow = TRUE)
+  v1 <- apply(v, 2, max, na.rm = TRUE)
+  v1 <- matrix(rep(v1, each = nrow(v)), ncol = ncol(v))
   mdd <- (v1 - v) / v1 * 100
-  max_drawdown <- apply(mdd, 2, max)
+  max_drawdown <- apply(mdd, 2, max, na.rm = TRUE)
 
-  ## VW Calculation
+  # VW Calculation
   r_vw <- matrix(NA, sum(count[7:length(count)]), 1)
   w_vw <- matrix(data = NA, nrow = max(mon) - 6, ncol = p)
 
@@ -133,8 +130,10 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
 
     r_tmp <- (1 + (x[which(mon == i), ] / 100))
 
-    for (k in 1:dim(r_tmp)[1]) {
-      idx <- which(mon == i)[k] - 124
+    vw.tmp <- vw0.tmp
+
+    for (k in 1:nrow(r_tmp)) {
+      idx <- which(mon == i)[k] - sum(count[1:6])
       if (idx > 0 && idx <= nrow(r_vw)) {
         r_vw[idx] <- r_tmp[k,] %*% vw0.tmp
         vw.tmp <- (r_tmp[k,] * vw0.tmp) / sum(r_tmp[k,] * vw0.tmp)
@@ -145,15 +144,15 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
     vw0.tmp <- vw.tmp
   }
 
-  vw_to_mean <- colMeans(vw.to) * 100 # TO
-  vw_sharpe_ratio <- sqrt(252) * (apply(r_vw - 1, 2, mean) / apply(r_vw - 1, 2, sd)) # SR
-  vw_volatility <- sqrt(252) * apply(r_vw - 1, 2, sd) * 100 # VO
+  vw_to_mean <- colMeans(vw.to, na.rm = TRUE) * 100
+  vw_sharpe_ratio <- sqrt(252) * (mean(r_vw - 1, na.rm = TRUE) / sd(r_vw - 1, na.rm = TRUE))
+  vw_volatility <- sqrt(252) * sd(r_vw - 1, na.rm = TRUE) * 100
 
-  vw_v <- apply((1 + (r_vw - 1)), 2, cumprod)
-  vw_v1 <- as.matrix(apply(vw_v, 2, max))
-  vw_v1 <- matrix(rep(t(vw_v1), dim(vw_v)[1]), ncol = dim(vw_v)[2], byrow = TRUE)
+  vw_v <- cumprod(1 + (r_vw - 1))
+  vw_v1 <- max(vw_v, na.rm = TRUE)
+  vw_v1 <- rep(vw_v1, length(vw_v))  # Corrected line
   vw_mdd <- (vw_v1 - vw_v) / vw_v1 * 100
-  vw_max_drawdown <- apply(vw_mdd, 2, max)
+  vw_max_drawdown <- max(vw_mdd, na.rm = TRUE)
 
   ## Visualization
   # Combine all the returns for visualization
@@ -162,7 +161,13 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
 
   # Cumulative returns
   cum.r <- apply(r.final - 1, 2, cumsum)
-  df <- data.frame(time = Date[-seq(1:sum(count[1:6]))], return = cum.r)
+
+  # Ensure cum.r and Date have matching lengths
+  if (nrow(cum.r) != length(Date[-seq(1:sum(count[1:6]))])) {
+    stop("Mismatch in rows between Date and cumulative returns (cum.r).")
+  }
+
+  df <- data.frame(time = Date[-seq(1:sum(count[1:6]))], cum.r)
   colnames(df) <- c("time", "MV", "JM", "FZY", "EW", "REN", "TZ", "VW")
 
   df <- melt(df, id.vars = "time")
@@ -178,9 +183,10 @@ perform_analysis <- function(x, mon, count, Date, num_cores = 7) {
   to.final <- cbind(turn_over, vw.to) # Combine all the TOs of different methods
   to.final <- to.final[, colSums(is.na(to.final)) == 0] # Remove empty columns
 
-  index <- which(month(Date)[-1] != month(Date)[-length(month(Date))])
+  # Create time vector matching the turnover data
+  time <- sapply(1:nrow(to.final), function(i) Date[which(mon == (i + 6))[1]])
 
-  df2 <- data.frame(time = Date[index[6:length(index)]], turnover = apply(abs(to.final), 2, cumsum))
+  df2 <- data.frame(time = time, turnover = apply(abs(to.final), 2, cumsum))
   colnames(df2) <- c("time", "MV", "JM", "FZY", "EW", "REN", "TZ", "VW")
 
   df2 <- melt(df2, id.vars = "time")
