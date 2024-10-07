@@ -16,10 +16,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' load the sample data
+#' # load the sample data
 #' dat(FF25)
 #' # Run the main function
-#' result <- ren(data)
+#' result <- ren(FF25)
 #'
 #' # Display results
 #' print(result$cumulative_return_plot)

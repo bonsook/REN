@@ -1,20 +1,9 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* written package names, software names and API (application
-programming interface) names in single quotes in title and description.
-e.g: --> 'REN'
+* proofreading of the Description.
 
-* rewritten the description to remove "This package", package name,
-title or similar.
-
-* removed unnecessary spaces in the description field.
-
-* replaced \dontrun with \donttest
-
-* removed print(), replace with message().
-
-* retained the dontrun directive in the ren function example because it requires importing large datasets like FF25, which would take too long to execute during checks.
+* comment out line 38 in man/ren.Rd by editing r/ren.R
 
 ## R CMD check results
 
